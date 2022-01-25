@@ -475,4 +475,6 @@ def create_ssl_context() -> ssl.SSLContext:
     context.options |= OP_NO_TLSv1
     context.options |= OP_NO_TLSv1_1
     context.set_alpn_protocols(["h2"])
+    # Workaround for [SSL: CA_MD_TOO_WEAK] ca md too weak (_ssl.c:3862)
+    context.set_ciphers('DEFAULT @ SECLEVEL= 1')
     return context

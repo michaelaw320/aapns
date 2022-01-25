@@ -473,7 +473,7 @@ def create_ssl_context() -> ssl.SSLContext:
     """A basic SSL context suitable for HTTP/2 and APN."""
     context = create_default_context()
     # Workaround for [SSL: CA_MD_TOO_WEAK] ca md too weak (_ssl.c:3862)
-    context.set_ciphers("ALL:@SECLEVEL=0")
+    context.set_ciphers("DEFAULT@SECLEVEL=1")
 
     context.options |= OP_NO_TLSv1
     context.options |= OP_NO_TLSv1_1

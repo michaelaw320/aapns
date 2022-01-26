@@ -8,7 +8,7 @@ from contextlib import suppress
 from dataclasses import dataclass, field
 from logging import getLogger
 from math import inf
-from ssl import OP_NO_TLSv1, OP_NO_TLSv1_1, SSLError, create_default_context
+from ssl import OP_ALL, OP_NO_TLSv1, OP_NO_TLSv1_1, SSLError, create_default_context
 from time import time
 from typing import Dict, List, Optional
 from urllib.parse import urlparse
@@ -473,8 +473,8 @@ def create_ssl_context() -> ssl.SSLContext:
     """A basic SSL context suitable for HTTP/2 and APN."""
     context = create_default_context()
     # Workaround for [SSL: CA_MD_TOO_WEAK] ca md too weak (_ssl.c:3862)
-    context.set_ciphers("DEFAULT@SECLEVEL=1")
-
+    #context.set_ciphers("DEFAULT@SECLEVEL=1")
+    context.options = OP_ALL
     context.options |= OP_NO_TLSv1
     context.options |= OP_NO_TLSv1_1
     context.set_alpn_protocols(["h2"])
